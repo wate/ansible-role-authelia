@@ -6,7 +6,7 @@ authelia_version: latest
 
 ## -----------------
 ## ユーザーデータベース
-## Authentication Backend Provider a `file` only
+## ※Authentication Backend が`file`の場合のみ有効
 ## -----------------
 authelia_users: {}
 
