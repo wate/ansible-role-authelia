@@ -1,16 +1,24 @@
 # code: language=ansible
 ---
-# - name: Create/update setting file
-#   ansible.builtin.template:
-#     src: authelia.conf.j2
-#     dest: /erc/authelia/authelia.conf
-#     mode: "0644"
-# - name: Add/update option setting
-#   ansible.builtin.lineinfile:
-#     path: /etc/authelia/authelia.conf
-#     regexp: ^(#\\s+)?option_name=
-#     line: option_name=option_value
-# - name: Add/update custom setting
-#   ansible.builtin.blockinfile:
-#     path: /etc/authelia/authelia.conf
-#     block: "{{ authelia_extra_cfg | default('') }}"
+- name: Create/update setting file
+  ansible.builtin.template:
+    src: configuration.yml.j2
+    dest: /etc/authelia/configuration.yml
+    mode: "0600"
+  notify: Restart authelia
+- name: Create/update user database file
+  when:
+    - authelia_cfg.authentication_backend.file is defined
+    - authelia_cfg.authentication_backend.file.path is defined
+  block:
+    - name: Create user database file directory
+      ansible.builtin.file:
+        path: /etc/authelia{{ authelia_cfg.authentication_backend.file.path | dirname }}
+        state: directory
+        mode: "0700"
+      when: authelia_cfg.authentication_backend.file.path | dirname | length > 0
+    - name: Create/update user database file
+      ansible.builtin.template:
+        src: users_database.yml.j2
+        dest: /etc/authelia{{ authelia_cfg.authentication_backend.file.path }}
+        mode: "0600"

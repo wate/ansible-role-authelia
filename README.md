@@ -22,9 +22,15 @@ Role Variables
 
 インストールするバージョン
 
-#### `authelia_packages`
+#### `authelia_users`
 
-インストールするパッケージ
+ユーザーデータベース  
+※Authentication Backend が`file`の場合のみ有効
+
+#### `authelia_cfg`
+
+Autheliaの設定  
+@see https://github.com/authelia/authelia/blob/master/internal/configuration/config.template.yml
 
 ### [vars/main.yml](vars/main.yml)
 
@@ -32,11 +38,7 @@ Role Variables
 
 #### `authelia_dependency_packages`
 
-#### `authelia_home`
-
-#### `authelia_user`
-
-#### `authelia_group`
+#### `authelia_repo`
 
 Example Playbook
 --------------

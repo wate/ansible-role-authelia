@@ -17,10 +17,10 @@
         listen_tcp_posts: "{{ ansible_facts.tcp_listen | map(attribute='port') | unique | sort | list }}"
         listen_udp_posts: "{{ ansible_facts.udp_listen | map(attribute='port') | unique | sort | list }}"
     # ## パッケージのテスト
-    # - name: Assert package
-    #   ansible.builtin.assert:
-    #     that:
-    #       - ansible_facts.packages['package'] is defined
+    - name: Assert package
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.packages['authelia'] is defined
     # ## ユーザーのテスト
     # - name: Test user
     #   block:
@@ -69,12 +69,15 @@
     #           - result.stat.islnk
     #           - result.stat.lnk_source == '/etc/nginx/sites-available/default'
     ## サービスのテスト
-    # - name: Assert service
-    #   ansible.builtin.assert:
-    #     that:
-    #       - ansible_facts.services['package.service'] is defined
-    #       - ansible_facts.services['package.service']['state'] == 'running'
-    #       - ansible_facts.services['package.service']['status'] == 'enabled'
+    - name: Debug
+      ansible.builtin.debug:
+        var: ansible_facts.services['authelia.service']
+    - name: Assert service
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['authelia.service'] is defined
+          # - ansible_facts.services['authelia.service']['state'] == 'running'
+          # - ansible_facts.services['authelia.service']['status'] == 'enabled'
     # ## 待受ポートのテスト
     # - name: Assert listen port
     #   ansible.builtin.assert:
