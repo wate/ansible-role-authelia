@@ -1,0 +1,37 @@
+# code: language=ansible
+---
+# - name: Set Install version variable
+#   when: authelia_version == 'latest'
+#   block:
+#     - name: Set Github API request header
+#       ansible.builtin.set_fact:
+#         github_api_request_headers:
+#           Accept: application/vnd.github+json
+#     - name: Merge Github API Authorization request header
+#       ansible.builtin.set_fact:
+#         github_api_request_headers: "{{ github_api_request_headers | combine(merge_reauest_header) }}"
+#       vars:
+#         merge_reauest_header:
+#           Authorization: Bearer {{ lookup('env', 'GITHUB_TOKEN') }}
+#       when: lookup('env', 'GITHUB_TOKEN') | length > 0
+#     - name: Get latest release
+#       ansible.builtin.uri:
+#         url: https://api.github.com/repos/{{ authelia_repo_owner }}/{{ authelia_repo_name }}/releases/latest
+#         headers: "{{ github_api_request_headers }}"
+#       register: latest_releases
+#     - name: Set package version variable
+#       ansible.builtin.set_fact:
+#         authelia_version: "{{ latest_releases.json.tag_name }}"
+# - name: Set package file variable
+#   ansible.builtin.set_fact:
+#     package_file: authelia_{{ authelia_version[1:] }}_{{ arch_type_maps[ansible_facts['architecture']] }}.deb
+#   vars:
+#     arch_type_maps:
+#       x86_64: amd64
+#       aarch64: arm64
+# - name: Install authelia
+#   ansible.builtin.apt:
+#     deb: https://github.com/{{ authelia_repo_owner }}/{{ authelia_repo_name }}/releases/download/{{ authelia_version }}/{{ package_file }}
+- name: Install authelia packages
+  ansible.builtin.apt:
+    name: "{{ authelia_packages }}"

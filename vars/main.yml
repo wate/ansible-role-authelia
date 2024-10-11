@@ -1,0 +1,12 @@
+---
+authelia_dependency_packages: []
+
+# authelia_apt_key_url: https://packages.repository.com/authelia.gpg.key
+# authelia_apt_key_download_dest: /etc/apt/keyrings/authelia.gpg.key
+# authelia_apt_key_dest: /etc/apt/keyrings/authelia.gpg
+
+# authelia_repo: owner_name/repo_name
+
+authelia_home: /opt/authelia
+authelia_user: authelia
+authelia_group: authelia
