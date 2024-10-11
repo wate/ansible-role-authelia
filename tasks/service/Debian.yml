@@ -1,11 +1,5 @@
 # code: language=ansible
 ---
-- name: Create/update systemd unit file
-  ansible.builtin.template:
-    src: authelia.service.j2
-    dest: /lib/systemd/system/authelia.service
-    mode: "0644"
-  notify: restart authelia
 - name: Service authelia is active and enabled on system startup
   ansible.builtin.systemd_service:
     name: authelia

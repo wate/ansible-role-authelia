@@ -1,10 +1,10 @@
 # code: language=ansible
 ---
-# - name: Restart authelia
-#   ansible.builtin.systemd_service:
-#     state: restarted
-#     name: authelia
-# - name: Reload authelia
-#   ansible.builtin.systemd_service:
-#     state: reloaded
-#     name: authelia
+- name: Restart authelia
+  ansible.builtin.systemd_service:
+    state: restarted
+    name: authelia
+- name: Reload authelia
+  ansible.builtin.systemd_service:
+    state: reloaded
+    name: authelia

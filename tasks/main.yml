@@ -11,20 +11,12 @@
         - "{{ ansible_facts.os_family }}.yml"
       paths:
         - vars
-  tags: role_{{ role_name }}_include_vars
+  tags: role_authelia_include_vars
 - name: Include variable file
   ansible.builtin.include_vars:
     file: "{{ variable_file }}"
   when: variable_file | length > 0
-  tags: role_{{ role_name }}_include_vars
-- name: Import repository task
-  ansible.builtin.import_tasks:
-    file: repository.yml
-  tags: role_authelia_repository
-- name: Import dependency task
-  ansible.builtin.import_tasks:
-    file: dependency.yml
-  tags: role_authelia_dependency
+  tags: role_authelia_include_vars
 - name: Import package task
   ansible.builtin.import_tasks:
     file: package.yml
